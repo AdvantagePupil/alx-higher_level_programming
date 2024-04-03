@@ -1,12 +1,11 @@
 #!/usr/bin/python3
-"""Square class defination"""
-
+"""Square class definition"""
 
 class Square:
     """Square class body"""
 
-    def __init__(self, size=0):
-        """Square contructor.
+    def __init__(self, size):
+        """Square constructor
         Args:
             size (int): The size of the new square.
         """
@@ -14,11 +13,12 @@ class Square:
 
     @property
     def size(self):
-        """return new size of the square."""
-        return (self.__size)
+        """Square getter for __size."""
+        return self.__size
 
     @size.setter
     def size(self, value):
+        """Square setter for __size."""
         if not isinstance(value, int):
             raise TypeError("size must be an integer")
         elif value < 0:
@@ -26,5 +26,12 @@ class Square:
         self.__size = value
 
     def area(self):
-        """Return area of the square."""
-        return (self.__size * self.__size)
+        """Return the area of a square."""
+        return self.__size * self.__size
+
+    def my_print(self):
+        """Print stdout the square with the character"""
+        for i in range(self.__size):
+            print("#" * self.__size)
+        if self.__size == 0:
+            print("")
