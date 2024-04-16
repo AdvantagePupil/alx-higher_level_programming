@@ -25,4 +25,4 @@ try:
     print(my_fake)
     print(type(my_fake))
 except Exception as e:
-    print("[{}] {}".format(e.__class__.__name__, e))
+    print("[{}] {}".format(e.__class__.__name__, e))}
