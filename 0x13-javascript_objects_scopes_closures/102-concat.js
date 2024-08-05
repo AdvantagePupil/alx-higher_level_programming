@@ -1,32 +1,37 @@
-#!/usr/bin/node
-const fs = require('fs').promises; // Use promises API for async operations
-const { argv } = require('process');
+#!/usr/bin/env node
 
-async function getContent(file) {
+const fs = require('fs').promises; // Using the promise-based API for async operations
+const { argv } = require('process'); // Accessing command line arguments
+
+// Function to read the content of a file asynchronously
+async function readFile(filePath) {
   try {
-    const content = await fs.readFile(file, 'utf8');
+    const content = await fs.readFile(filePath, 'utf8');
     return content;
   } catch (error) {
-    console.error(`Failed to read file ${file}: ${error.message}`);
+    console.error(`Failed to read file ${filePath}: ${error.message}`);
     process.exit(1);
   }
 }
 
-(async () => {
-  if (argv.length < 5) {
-    console.error("Usage: node script.js inputFile1 inputFile2 outputFile");
+// Main function to execute the concatenation
+async function concatFiles() {
+  if (argv.length < 4) {
+    console.error("Usage: node script.js <sourceFile1> <sourceFile2> <destination>");
     process.exit(1);
   }
 
   try {
-    const file1Content = await getContent(argv[2]);
-    const file2Content = await getContent(argv[3]);
-    const concated = file1Content + file2Content;
+    const file1Content = await readFile(argv[2]);
+    const file2Content = await readFile(argv[3]);
+    const combinedContent = `${file1Content}\n${file2Content}`;
 
-    await fs.writeFile(argv[4], concated, 'utf8');
+    await fs.writeFile(argv[4], combinedContent, 'utf8');
     console.log("Files concatenated successfully.");
   } catch (error) {
     console.error(`An error occurred: ${error.message}`);
     process.exit(1);
   }
-})();
+}
+
+concatFiles();
